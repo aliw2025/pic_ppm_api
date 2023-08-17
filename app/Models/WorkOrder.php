@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class WorkOrder extends Model
 {
     use HasFactory;
+    protected $fillable = ['*'];
+
 
 
     public function asset()
