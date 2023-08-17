@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WorkOrderResource;
 use App\Models\WorkOrder;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class WorkOrderApiController extends Controller
 {
@@ -24,7 +28,6 @@ class WorkOrderApiController extends Controller
     {
         //
         return WorkOrderResource::collection(WorkOrder::all());
-
     }
 
     /**
@@ -35,9 +38,36 @@ class WorkOrderApiController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            "request_type_id" => 'required',
+            "department_id" => 'required',
+            "category_id" => 'required',
+            "asset_id" => 'required',
+            "priority_id" => 'required',
+            "due_date" => 'required'
+        ]);
+        // dd($validator->fails());
+        if($validator->fails()){
+
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], JsonResponse::HTTP_BAD_REQUEST);
+        }
+        // dd($reques   t->all());
         //
-        WorkOrder::create($request->all());
-        return response()->json(['success','work order generated successfully']);
+        $workOrder = new WorkOrder();
+        $workOrder->request_type_id = $request->request_type_id;
+        $workOrder->department_id = $request->department_id;
+        $workOrder->category_id = $request->category_id;
+        $workOrder->asset_id = $request->asset_id;
+        $workOrder->priority_id = $request->priority_id;
+        $workOrder->due_date = $request->due_date;
+        $workOrder->title = $request->title;
+        $workOrder->description = $request->description;
+        $workOrder->save();
+        // WorkOrder::create($request->all());
+        return response()->json(['success', 'work order generated successfully']);
     }
 
     /**
@@ -49,6 +79,7 @@ class WorkOrderApiController extends Controller
     public function show(WorkOrder $workOrder)
     {
         //
+        return new WorkOrderResource($workOrder);
     }
 
     /**
