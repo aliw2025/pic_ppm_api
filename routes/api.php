@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\WorkOrderApiController;
+use App\Http\Controllers\Api\AssetApiController;
 use App\Http\Controllers\Api\AuthController;
 
 use Illuminate\Http\Request;
@@ -23,3 +24,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('WorkOrder',WorkOrderApiController::class);
+Route::apiResource('Asset',AssetApiController::class);
