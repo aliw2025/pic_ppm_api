@@ -12,8 +12,6 @@ class AuthController extends Controller
     //s
     public function login(Request $request)
     {
-        // dd("dfdf iam hit");
-
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -21,6 +19,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
+
             $token = $user->createToken('api-token')->plainTextToken;
 
             return response()->json([
@@ -34,9 +33,9 @@ class AuthController extends Controller
         ]);
         
     }
+
     public function register(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'name' => "required|string|max:255",
             'email' => "required|email|unique:users,email",

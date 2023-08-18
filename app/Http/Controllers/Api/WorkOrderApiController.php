@@ -54,8 +54,7 @@ class WorkOrderApiController extends Controller
                 'errors' => $validator->errors()
             ], JsonResponse::HTTP_BAD_REQUEST);
         }
-        // dd($reques   t->all());
-        //
+       
         $workOrder = new WorkOrder();
         $workOrder->request_type_id = $request->request_type_id;
         $workOrder->department_id = $request->department_id;
@@ -66,8 +65,8 @@ class WorkOrderApiController extends Controller
         $workOrder->title = $request->title;
         $workOrder->description = $request->description;
         $workOrder->save();
-        // WorkOrder::create($request->all());
         return response()->json(['success', 'work order generated successfully']);
+
     }
 
     /**
@@ -91,7 +90,17 @@ class WorkOrderApiController extends Controller
      */
     public function update(Request $request, WorkOrder $workOrder)
     {
-        //
+
+        $workOrder->request_type_id = $request->request_type_id;
+        $workOrder->department_id = $request->department_id;
+        $workOrder->category_id = $request->category_id;
+        $workOrder->asset_id = $request->asset_id;
+        $workOrder->priority_id = $request->priority_id;
+        $workOrder->due_date = $request->due_date;
+        $workOrder->title = $request->title;
+        $workOrder->description = $request->description;
+        $workOrder->save();
+        return response()->json(['success', 'workorder updated successfully']);
     }
 
     /**
@@ -103,5 +112,8 @@ class WorkOrderApiController extends Controller
     public function destroy(WorkOrder $workOrder)
     {
         //
+        $workOrder->delete();
+        return response()->json('success','workorder deleted successfully');
     }
+    
 }
