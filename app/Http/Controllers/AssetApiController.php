@@ -17,7 +17,13 @@ class AssetApiController extends Controller
     public function index()
     {
         //
-        return AssetResource::collection(Asset::all());
+        if ($request->wantsJson()) {
+            // Return JSON response for API requests
+            return AssetResource::collection(Asset::all());
+        } else {
+            // Return Inertia response for web requests
+            return "this is browser response";
+        }
     }
 
     /**

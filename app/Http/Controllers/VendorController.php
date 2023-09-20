@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vendor;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\VendorResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Models\TblVendorPersonType;
@@ -16,9 +17,17 @@ class VendorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        if ($request->is('api/*')) {
+            // Return JSON response for API requests
+            return VendorResource :: collection(Vendor::all());
+        } else {
+            // Return Inertia response for web requests
+            return "this is browser response";
+        }
+        
     }
 
     /**
@@ -54,7 +63,7 @@ class VendorController extends Controller
         $asset_vendor->business_name  = $request->business_name;
         $asset_vendor->address  = $request->address;
         $asset_vendor->save();
-
+        return "vendor saved";
         return redirect()->route('vendors.show',$asset_vendor->id);
 
         $contact_persons = VendorContactPerson::where('vendor','=',$asset_vendor->id)->get();
