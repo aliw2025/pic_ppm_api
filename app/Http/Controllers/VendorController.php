@@ -63,6 +63,7 @@ class VendorController extends Controller
         $asset_vendor->business_name  = $request->business_name;
         $asset_vendor->address  = $request->address;
         $asset_vendor->save();
+        // api
         return "vendor saved";
         return redirect()->route('vendors.show',$asset_vendor->id);
 
@@ -99,9 +100,27 @@ class VendorController extends Controller
      * @param  \App\Models\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function show(Vendor $vendor)
-    {    
+    public function showorg(Vendor $vendor)
+    {     
         $asset_vendor = $vendor;
+        dd($vendor);
+        // api
+        // return $vendor;  
+        // return new VendorResource($vendor);
+
+        $contact_persons = VendorContactPerson::where('vendor','=',$asset_vendor->id)->get();
+        return view('vendors.add-vendor',compact('asset_vendor','contact_persons'));
+    }
+
+    public function show($id)
+    {     
+       $vendor = Vendor::find($id);
+       return new VendorResource($vendor); 
+    
+        // api
+        // return $vendor;  
+        // return new VendorResource($vendor);
+
         $contact_persons = VendorContactPerson::where('vendor','=',$asset_vendor->id)->get();
         return view('vendors.add-vendor',compact('asset_vendor','contact_persons'));
     }
@@ -112,7 +131,7 @@ class VendorController extends Controller
      * @param  \App\Models\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vendor $vendor)
+    public function edit(Vendor $vendor)  
     {
         
     }
