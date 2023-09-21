@@ -103,10 +103,7 @@ class VendorController extends Controller
     public function showorg(Vendor $vendor)
     {     
         $asset_vendor = $vendor;
-        dd($vendor);
-        // api
-        // return $vendor;  
-        // return new VendorResource($vendor);
+       
 
         $contact_persons = VendorContactPerson::where('vendor','=',$asset_vendor->id)->get();
         return view('vendors.add-vendor',compact('asset_vendor','contact_persons'));
@@ -115,12 +112,8 @@ class VendorController extends Controller
     public function show($id)
     {     
        $vendor = Vendor::find($id);
-       return new VendorResource($vendor); 
+       return new VendorResource($vendor);
     
-        // api
-        // return $vendor;  
-        // return new VendorResource($vendor);
-
         $contact_persons = VendorContactPerson::where('vendor','=',$asset_vendor->id)->get();
         return view('vendors.add-vendor',compact('asset_vendor','contact_persons'));
     }
@@ -145,7 +138,15 @@ class VendorController extends Controller
      */
     public function update(Request $request, Vendor $vendor)
     {
-        //
+       
+        $asset_vendor = Vendor::find($request->id);
+        $asset_vendor->vendor_name  = $request->vendor_name;
+        $asset_vendor->business_name  = $request->business_name;
+        $asset_vendor->address  = $request->address;
+        $asset_vendor->save();
+        return $asset_vendor;
+
+        return "record updated successcully";
     }
 
     /**
@@ -154,8 +155,12 @@ class VendorController extends Controller
      * @param  \App\Models\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vendor $vendor)
+    public function destroy($id)
     {
-        //
+        
+        $vendor = Vendor::find($id);
+        $vendor->delete();
+        return "Vendor Deleted Successfully";
+       
     }
 }
