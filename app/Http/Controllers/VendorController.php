@@ -22,7 +22,9 @@ class VendorController extends Controller
         //
         if ($request->is('api/*')) {
             // Return JSON response for API requests
-            return VendorResource :: collection(Vendor::all());
+            $vendors = Vendor::with('contacts')->get();
+            return VendorResource::collection($vendors);
+            // return VendorResource :: collection(Vendor::all()->with('contacts'));
         } else {
             // Return Inertia response for web requests
             return "this is browser response";
@@ -77,6 +79,7 @@ class VendorController extends Controller
         $vendors = Vendor::all();
         return view('vendors.vendors',compact('vendors'));
     }
+
      public function storeContactPerson(Request $request)
     {
         
@@ -87,10 +90,17 @@ class VendorController extends Controller
         $person->email = $request->email;
         $person->landline = $request->landline;
         $person->mobile = $request->mobile;
-        $person->vendor = $request->vendor_id;
+        $person->vendor = $request->vendor;
         $person->save();
+        if ($request->is('api/*')) {
+            // Return JSON response for API requests
+            return "vendor contact added";
+        } else {
+            // Return Inertia response for web requests
+            return redirect()->route('vendors.create',$request->vendor_id);
+        }
+      
 
-        return redirect()->route('vendors.create',$request->vendor_id);
 
     }
 
@@ -111,7 +121,7 @@ class VendorController extends Controller
 
     public function show($id)
     {     
-       $vendor = Vendor::find($id);
+       $vendor = Vendor::with('contacts')->find($id);
        return new VendorResource($vendor);
     
         $contact_persons = VendorContactPerson::where('vendor','=',$asset_vendor->id)->get();
