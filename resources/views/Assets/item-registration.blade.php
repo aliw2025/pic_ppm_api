@@ -84,7 +84,7 @@
                          </div>
                          <div class="col-4">
                              <label class="mt-1 form-label"> Manual</label>
-                             <input @if(isset($asset)) value="{{$asset->manual_file_name}} @endif name="file_name" placeholder="Attach Manual" type="file" class="form-control">
+                             <input @if(isset($asset)) value="{{$asset->manual_file_name}}" @endif name="file_name" placeholder="Attach Manual" type="file" class="form-control">
                          </div>
                          @if(isset($asset))
                          <div class="col-4 mt-4 ">
