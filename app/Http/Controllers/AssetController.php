@@ -53,7 +53,7 @@ class AssetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $users = User::all();
         $vendors = Vendor::all();
@@ -64,8 +64,25 @@ class AssetController extends Controller
 
         $ppmTypes = TblPpmType::all();
         $scheduleTypes = TblScheduleType::all();
+        $responseData = [
+            'users' => $users,
+            'vendors' => $vendors,
+            'floors' => $floors,
+            'eq_status' => $eq_status,
+            'departments' => $departments,
+            'blocks' => $blocks,
+            'ppmTypes' => $ppmTypes,
+            'scheduleTypes' => $scheduleTypes
+        ];
+        if ($request->is('api/*')) {
+            // Return JSON response for API requests
+            return response()->json($responseData);
+        } else {
+            // Return Inertia response for web requests
+            return view('Assets.add-asset', compact('eq_status', 'floors', 'departments', 'vendors', 'blocks', 'users', 'ppmTypes', 'scheduleTypes'));
 
-        return view('Assets.add-asset', compact('eq_status', 'floors', 'departments', 'vendors', 'blocks', 'users', 'ppmTypes', 'scheduleTypes'));
+        }
+
     }
 
     /**
@@ -125,7 +142,6 @@ class AssetController extends Controller
 
     public function selectAsset($id)
     {
-
 
         $vendors = Vendor::all();
         $floors = TblFloor::all();
