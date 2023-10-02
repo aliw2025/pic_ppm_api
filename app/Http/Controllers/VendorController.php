@@ -80,7 +80,7 @@ class VendorController extends Controller
         return view('vendors.vendors',compact('vendors'));
     }
 
-     public function storeContactPerson(Request $request)
+     public function storeContactPerson(Request $request)   
     {
         
         $person = new VendorContactPerson();
@@ -99,9 +99,7 @@ class VendorController extends Controller
             // Return Inertia response for web requests
             return redirect()->route('vendors.create',$request->vendor_id);
         }
-      
-
-
+    
     }
 
     /**
@@ -113,8 +111,6 @@ class VendorController extends Controller
     public function showorg(Vendor $vendor)
     {     
         $asset_vendor = $vendor;
-       
-
         $contact_persons = VendorContactPerson::where('vendor','=',$asset_vendor->id)->get();
         return view('vendors.add-vendor',compact('asset_vendor','contact_persons'));
     }
@@ -123,7 +119,6 @@ class VendorController extends Controller
     {     
        $vendor = Vendor::with('contacts')->find($id);
        return new VendorResource($vendor);
-    
         $contact_persons = VendorContactPerson::where('vendor','=',$asset_vendor->id)->get();
         return view('vendors.add-vendor',compact('asset_vendor','contact_persons'));
     }

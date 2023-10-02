@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AssetResource;
 use App\Models\AssetPpm;
 use App\Models\PpmSchedule;
 use App\Models\TblAssetImages;
@@ -30,6 +31,8 @@ class AssetController extends Controller
      */
     public function index()
     {
+        $assets = Asset::all();
+        return AssetResource::collection($assets);
         //
     }
 
@@ -94,6 +97,7 @@ class AssetController extends Controller
     public function store(Request $request)
     {
         
+        
         $asset = new Asset();
         $asset->asset_technical_category = $request->asset_tech_cat;
         $asset->equipment_category_name = $request->equipment_category_name;
@@ -122,6 +126,7 @@ class AssetController extends Controller
         $asset->department = $request->deparment;
 
         if ($request->hasFile('file_name')) {
+
             $file = $request->file('file_name');
             // dd($file);s
             $fileName = $file->getClientOriginalName();
@@ -131,13 +136,20 @@ class AssetController extends Controller
         }
 
         $asset->save();
-
-        $vendors = Vendor::all();
-        $floors = TblFloor::all();
-        $eq_status = TblEquipmentStatus::all();
-        $departments = TblDepartment::all();
-        $blocks = TblBuildingBlock::all();
-        return view('Assets.add-asset', compact('asset', 'eq_status', 'floors', 'departments', 'vendors', 'blocks'));
+        if ($request->is('api/*')) {
+            // Return JSON response for API requests
+            return "Asset Saved";
+        } else {
+            // Return  response for web requests
+            $vendors = Vendor::all();
+            $floors = TblFloor::all();
+            $eq_status = TblEquipmentStatus::all();
+            $departments = TblDepartment::all();
+            $blocks = TblBuildingBlock::all();
+            return view('Assets.add-asset', compact('asset', 'eq_status', 'floors', 'departments', 'vendors', 'blocks'));
+        }
+       
+       
     }
 
     public function selectAsset($id)
