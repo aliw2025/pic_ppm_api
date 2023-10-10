@@ -77,15 +77,7 @@ class AssetController extends Controller
             'ppmTypes' => $ppmTypes,
             'scheduleTypes' => $scheduleTypes
         ];
-        if ($request->is('api/*')) {
-            // Return JSON response for API requests
-            return response()->json($responseData);
-        } else {
-            // Return Inertia response for web requests
-            return view('Assets.add-asset', compact('eq_status', 'floors', 'departments', 'vendors', 'blocks', 'users', 'ppmTypes', 'scheduleTypes'));
-
-        }
-
+       return$responseData;
     }
 
     /**
@@ -172,10 +164,22 @@ class AssetController extends Controller
      * @param  \App\Models\Asset  $asset
      * @return \Illuminate\Http\Response
      */
-    public function show(Asset $asset)
-    {
+
+    public function show($id,Request $request)
+    {   
+        $asset = Asset::find($id);
         //
-        return redirect()->route('select-asset', $asset->id);
+        if ($request->is('api/*')) {
+            // Return JSON response for API requests
+            return AssetResource::make($asset);
+            
+        } else {
+            // Return Inertia response for web requests
+            return redirect()->route('select-asset', $asset->id);
+
+        }
+
+
     }
 
     /**
