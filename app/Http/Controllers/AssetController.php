@@ -275,9 +275,13 @@ class AssetController extends Controller
      * @param  \App\Models\Asset  $asset
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Asset $asset)
+    public function update(Request $request, Asset $ast)
     {
         //
+        $asset = Asset::find($request->id);
+        if(!$asset){
+            return $request->all();
+        }
         $asset->asset_technical_category = $request->asset_tech_cat;
         $asset->equipment_category_name = $request->equipment_category_name;
         $asset->equipment_type = $request->equipment_type;
@@ -316,6 +320,11 @@ class AssetController extends Controller
 
 
         $asset->save();
+
+        if ($request->is('api/*')) {
+            // Return JSON response for API requests
+            return $asset;  
+        }
 
         $vendors = Vendor::all();
         $floors = TblFloor::all();
