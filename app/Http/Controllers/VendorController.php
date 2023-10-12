@@ -144,7 +144,7 @@ class VendorController extends Controller
     public function update(Request $request, Vendor $vendor)
     {
        
-        $asset_vendor = Vendor::find($request->id);
+        $asset_vendor = Vendor::find($request->id);      
         $asset_vendor->vendor_name  = $request->vendor_name;
         $asset_vendor->business_name  = $request->business_name;
         $asset_vendor->address  = $request->address;

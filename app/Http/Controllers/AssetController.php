@@ -91,26 +91,26 @@ class AssetController extends Controller
         
         
         $asset = new Asset();
-        $asset->asset_technical_category = $request->asset_tech_cat;
+        $asset->asset_technical_category = $request->asset_technical_category;
         $asset->equipment_category_name = $request->equipment_category_name;
         $asset->equipment_type = $request->equipment_type;
         $asset->manufacturer = $request->manufacturer;
         $asset->model = $request->model;
         $asset->serial_number = $request->serial_number;
         $asset->fa_number = $request->fa_number;
-        $asset->equipment_sequence_number = $request->equipment_seq_number;
+        $asset->equipment_sequence_number = $request->equipment_sequence_number;
         $asset->manufacture_date = $request->manufacture_date;
         $asset->installation_date = $request->installation_date;
-        $asset->equipment_status = $request->asset_status;
+        $asset->equipment_status = $request->equipment_status;
         // $asset->manual_file_path;
         $asset->vendor = $request->vendor;
         $asset->room_area = $request->room_area;
         $asset->section = $request->section;
         $asset->sub_section = $request->sub_section;
         $asset->custodian_name = $request->custodian_name;
-        $asset->office_extention = $request->custodian_ofc_ext;
-        $asset->mobile = $request->custodian_mobile;
-        $asset->email = $request->custodian_email;
+        $asset->office_extention = $request->office_extention;
+        $asset->mobile = $request->mobile;
+        $asset->email = $request->email;
         // $asset->last_ppm_date;
         // $asset->next_ppm_date;
         $asset->building_block = $request->building_block;
@@ -282,26 +282,26 @@ class AssetController extends Controller
         if(!$asset){
             return $request->all();
         }
-        $asset->asset_technical_category = $request->asset_tech_cat;
+        $asset->asset_technical_category = $request->asset_technical_category;
         $asset->equipment_category_name = $request->equipment_category_name;
         $asset->equipment_type = $request->equipment_type;
         $asset->manufacturer = $request->manufacturer;
         $asset->model = $request->model;
         $asset->serial_number = $request->serial_number;
         $asset->fa_number = $request->fa_number;
-        $asset->equipment_sequence_number = $request->equipment_seq_number;
+        $asset->equipment_sequence_number = $request->equipment_sequence_number;
         $asset->manufacture_date = $request->manufacture_date;
         $asset->installation_date = $request->installation_date;
-        $asset->equipment_status = $request->asset_status;
+        $asset->equipment_status = $request->equipment_status;
         // $asset->manual_file_path;
         $asset->vendor = $request->vendor;
         $asset->room_area = $request->room_area;
         $asset->section = $request->section;
         $asset->sub_section = $request->sub_section;
         $asset->custodian_name = $request->custodian_name;
-        $asset->office_extention = $request->custodian_ofc_ext;
-        $asset->mobile = $request->custodian_mobile;
-        $asset->email = $request->custodian_email;
+        $asset->office_extention = $request->office_extention;
+        $asset->mobile = $request->mobile;
+        $asset->email = $request->email;
         // $asset->last_ppm_date;
         // $asset->next_ppm_date;
         $asset->building_block = $request->building_block;
