@@ -40,6 +40,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::controller(AssetController::class)->prefix('Asset')->group( function () {
+
+    Route::post('/update{id}', 'update')->name('Asset.updates');
+   
+ });
 
 Route::apiResource('WorkOrder',WorkOrderApiController::class);
 // Route::apiResource('Asset', AssetApiController::class);

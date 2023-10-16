@@ -88,7 +88,7 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         
         $asset = new Asset();
         $asset->asset_technical_category = $request->asset_technical_category;
@@ -275,12 +275,16 @@ class AssetController extends Controller
      * @param  \App\Models\Asset  $asset
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Asset $ast)
+
+
+    public function update(Request $request, $id)      
     {
-        //
+        // 
         $asset = Asset::find($request->id);
         if(!$asset){
-            return $request->all();
+            return "nil";
+            return $ast;
+            return $request->all(); 
         }
         $asset->asset_technical_category = $request->asset_technical_category;
         $asset->equipment_category_name = $request->equipment_category_name;
