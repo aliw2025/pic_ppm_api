@@ -401,9 +401,12 @@ class AssetController extends Controller
      * @param  \App\Models\Asset  $asset
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Asset $asset)
+    public function destroy($id)
     {
-        //
+        $asset = Asset :: find($id);
+        $asset->delete();
+        return "deleted asset";
+
     }
 
     public function finalizePpm(Request $request)
