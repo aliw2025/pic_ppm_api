@@ -280,6 +280,7 @@ class AssetController extends Controller
     public function update(Request $request, $id)      
     {
         // 
+        // return $request->all();
         $asset = Asset::find($request->id);
         if(!$asset){
             return "nil";
@@ -310,7 +311,7 @@ class AssetController extends Controller
         // $asset->next_ppm_date;
         $asset->building_block = $request->building_block;
         $asset->floor = $request->floor;
-        $asset->department = $request->deparment;
+        $asset->department = $request->department;
 
         if ($request->hasFile('file_name')) {
 
@@ -327,7 +328,7 @@ class AssetController extends Controller
 
         if ($request->is('api/*')) {
             // Return JSON response for API requests
-            return $asset;  
+            return $asset;
         }
 
         $vendors = Vendor::all();

@@ -74,6 +74,7 @@ class AssetApiController extends Controller
         return response()->json(["success"=>"Asset added successfully"]);
 
     }
+    
 
     /**
      * Display the specified resource.
@@ -96,7 +97,8 @@ class AssetApiController extends Controller
      */
     public function update(Request $request, Asset $asset)
     {
-        //
+        sdsd
+        //sdsd
         $asset->asset_technical_category = $request->asset_tech_cat;
         $asset->equipment_category_name = $request->equipment_category_name;
         $asset->equipment_type = $request->equipment_type;
