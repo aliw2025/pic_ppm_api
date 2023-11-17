@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\WorkOrderResource;
 use App\Models\Asset;
 use App\Models\TblDepartment;
 use App\Models\TblPriority;
@@ -26,11 +27,19 @@ class WorkOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-    
+        
         $workOrders = WorkOrder::where('parent_id',null)->get();
-        return view("work-order.wo-list",compact('workOrders'));
+        
+        if($request->is("api/*")){
+
+            return WorkOrderResource::collection($workOrders);
+        }
+        else{
+
+            return view("work-order.wo-list",compact('workOrders'));
+        }
         
     }
 
@@ -39,7 +48,7 @@ class WorkOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $requestTypes = TblRequestType::all();
         $departments = TblDepartment::all();
@@ -48,7 +57,23 @@ class WorkOrderController extends Controller
         $party_type = TblWoParty::all();  
         $vendors = Vendor::all();     
         $users = User::all(); 
-        return view('work-order.add-wo',compact('requestTypes','departments','woStatuses','priorities','party_type','vendors','users'));
+
+        if($request->is("api/*")){
+
+            $data = [
+                'requestTypes'=>$requestTypes,
+                'departments'=>$departments,
+                'woStatuses'=>$woStatuses,
+                'priorities'=>$priorities,
+                'party_type'=>$party_type,
+                'vendors '=>$vendors
+            ];
+            return $data;
+        }
+        else{
+
+            return view('work-order.add-wo',compact('requestTypes','departments','woStatuses','priorities','party_type','vendors','users'));
+        }
 
     }
     

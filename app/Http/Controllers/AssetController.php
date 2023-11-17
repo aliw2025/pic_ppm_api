@@ -77,7 +77,7 @@ class AssetController extends Controller
             'ppmTypes' => $ppmTypes,
             'scheduleTypes' => $scheduleTypes
         ];
-       return$responseData;
+        return$responseData;
     }
 
     /**

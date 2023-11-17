@@ -17,7 +17,11 @@ class WorkOrderApiController extends Controller
     {
         // $this->middleware('auth:sanctum');
     }
+    public function create(){
 
+
+        return "waseem  is khan";
+    }
 
     /**
      * Display a listing of the resource.

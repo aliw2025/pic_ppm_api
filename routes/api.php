@@ -6,6 +6,7 @@ use App\Http\Controllers\AssetApiController;
 use App\Http\Controllers\AssetController;
 // use App\Http\Controllers\Api\AssetApiController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\WorkOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,12 +26,19 @@ Route::controller(VendorController::class)->prefix('Vendor')->group( function ()
    
  });
 
-  
+//   
 Route::controller(AssetController::class)->prefix('Asset')->group( function () {
 
     Route::get('/create', 'create')->name('Asset.create');
    
- });
+});
+
+
+//  Route::controller(WorkOrderApiController::class)->prefix('WorkOrder')->group( function () {
+
+//     Route::get('/create', 'create')->name('WorkOrder.create');
+   
+//  });
  
  
 Route::post('/login', [AuthController::class,'login']);
@@ -46,7 +54,7 @@ Route::controller(AssetController::class)->prefix('Asset')->group( function () {
    
  });
 
-Route::apiResource('WorkOrder',WorkOrderApiController::class);
+Route::apiResource('WorkOrder',WorkOrderController::class);
 // Route::apiResource('Asset', AssetApiController::class);
 Route::apiResource('Asset', AssetController::class);
 Route::apiResource('Vendor',VendorController::class);
