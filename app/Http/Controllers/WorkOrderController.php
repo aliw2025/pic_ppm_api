@@ -55,7 +55,8 @@ class WorkOrderController extends Controller
         $woStatuses = TblWorkOrderStatus::all();
         $priorities = TblPriority::all();
         $party_type = TblWoParty::all();  
-        $vendors = Vendor::all();     
+        $vendors = Vendor::all();   
+        $assets = Asset::all();  
         $users = User::all(); 
 
         if($request->is("api/*")){
@@ -66,7 +67,8 @@ class WorkOrderController extends Controller
                 'woStatuses'=>$woStatuses,
                 'priorities'=>$priorities,
                 'party_type'=>$party_type,
-                'vendors '=>$vendors
+                'vendors '=>$vendors,
+                'assets'=>$assets
             ];
             return $data;
         }

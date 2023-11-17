@@ -94,12 +94,15 @@ class ServiceCategoryController extends Controller
         //
     }
 
+
     public  function deptServiceCategories(Request $request){
 
-
-        $servoce_cats = TblServiceCategory :: where('department_id',$request->id)->get();
-
-        return $servoce_cats;
+        
+        
+        $service_cats = TblServiceCategory :: where('department_id',$request->id)->get();
+        // $service_cats = TblServiceCategory :: all();
+        
+        return $service_cats;
     }
 
     

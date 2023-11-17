@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\WorkOrderApiController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\AssetApiController;
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\ServiceCategoryController;
 // use App\Http\Controllers\Api\AssetApiController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WorkOrderController;
@@ -30,15 +31,23 @@ Route::controller(VendorController::class)->prefix('Vendor')->group( function ()
 Route::controller(AssetController::class)->prefix('Asset')->group( function () {
 
     Route::get('/create', 'create')->name('Asset.create');
+    Route::get('/get-dept-assets', 'getDeptAssets')->name('get-dept-assets');
+   
+});
+Route::controller(ServiceCategoryController::class)->prefix('ServiceCategory')->group( function () {
+
+    Route::get('/service-categories', 'deptServiceCategories')->name('dept-service-categories');
    
 });
 
 
-//  Route::controller(WorkOrderApiController::class)->prefix('WorkOrder')->group( function () {
 
-//     Route::get('/create', 'create')->name('WorkOrder.create');
+
+ Route::controller(WorkOrderController::class)->prefix('WorkOrder')->group( function () {
+
+    Route::get('/create', 'create')->name('WorkOrder.create');
    
-//  });
+ });
  
  
 Route::post('/login', [AuthController::class,'login']);

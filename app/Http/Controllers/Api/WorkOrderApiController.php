@@ -71,6 +71,7 @@ class WorkOrderApiController extends Controller
         $workOrder->save();
         return response()->json(['success', 'work order generated successfully']);
 
+        
     }
 
     /**
